@@ -1,0 +1,99 @@
+.Emoji_Block {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto;
+    text-align: left;
+}
+.Emoji_Block .Emoji_Input {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.Emoji_Block .Emoji_Input > div[contenteditable=true] {
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    padding-right: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    border-radius: 2px;
+    line-height: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    word-break: break-all;
+}
+.Emoji_Block .Emoji_Input > div[contenteditable=true] img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 16px;
+    margin: 0 4px;
+}
+.Emoji_Block .Emoji_Clear {
+    clear: both;
+}
+.Emoji_Block .Emoji_Cont {
+    display: none;
+    position: absolute;
+    height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.Emoji_Block .Emoji_Cont > div {
+    background: #fff;
+    width: 280px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.Emoji_Block .Emoji_Cont .Emoji_Smile {
+    float: left;
+    padding: 1px;
+    cursor: pointer;
+}
+.Emoji_Block .Emoji_Cont .Emoji_Smile > div {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+}
+.Emoji_Block .Emoji_Cont .Emoji_Smile > div img {
+    margin-top: 5px;
+}
+.Emoji_Block .Emoji_Cont .Emoji_Smile > div:hover {
+    background: #ccc;
+    border-radius: 2px;
+}
+.Emoji_Block .Emoji_Smiles_Show_Button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.Emoji_Block .Emoji_Smiles_Show_Button > div {
+    width: 16px;
+    height: 16px;
+    background: url(../img/emoji/D83DDE0A.png);
+    cursor: pointer;
+}
+.Emoji_Submit {
+    position: absolute;
+    right: 0px;
+    bottom: -30px;
+}
+.Emoji_Submit > div {
+    display: inline-block;
+    padding: 0 20px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #eee;
+    border: 1px solid #eee;
+    font-size: 12px;
+    cursor: pointer;
+}
+.Emoji_Submit > div:hover {
+    border: 1px solid #aaf;
+}
