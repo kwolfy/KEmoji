@@ -1,4 +1,6 @@
 Плагин, превращающий div в текстовое поле с возможностью вставки смайлов
+<br>
+<a href="http://kwolfy.github.io/KEmoji/">Демо</a>
 ```javascript
   //Пример инициализации с параметрами:
   $('div#myEmoji').KEmoji({
