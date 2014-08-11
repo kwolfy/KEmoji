@@ -1,4 +1,4 @@
-Клон смайликов вконтакте с полным функционалом
+Плагин, превращающий div в текстовое поле с возможностью вставки смайлов
 ```javascript
   //Пример инициализации с параметрами:
   $('div#myEmoji').KEmoji({
@@ -19,7 +19,7 @@
 ```
 <h4>Api</h4>
 ```javascript
-  var emoji = $('#myEmoji').KEmoji('api');
+var emoji = $('#myEmoji').KEmoji('api');
 ```
 
 ```javascript
