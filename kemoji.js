@@ -55,6 +55,16 @@
             var el = document.createElement("IMG");
             el.src = options.emojiDir + '/' + smile + '.png';
             el.setAttribute('emoji', smile);
+			
+			try {
+				document.execCommand("enableObjectResizing", false, false);
+			}
+			catch(e) {
+				console.log(e);
+			}
+			
+			if("onresizestart" in el) // IE
+				el.onresizestart = function() { return false; };
 
             if (window.getSelection) {
                 var sel = window.getSelection();
