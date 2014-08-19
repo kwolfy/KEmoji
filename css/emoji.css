@@ -12,18 +12,20 @@
 }
 .Emoji_Block .Emoji_Input > div[contenteditable=true] {
     display: block;
+    position:relative;
+    z-index:10;
     box-sizing: border-box;
     height: 100%;
     padding: 10px;
     padding-right: 20px;
     border: 1px solid #ccc;
+    background:#fff;
     font-size: 14px;
     outline: none;
     border-radius: 2px;
     line-height: 16px;
     overflow-x: hidden;
     overflow-y: auto;
-    word-break: break-all;
 }
 .Emoji_Block .Emoji_Input > div[contenteditable=true] img {
     display: inline-block;
@@ -71,6 +73,7 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    z-index:11;
 }
 .Emoji_Block .Emoji_Smiles_Show_Button > div {
     width: 16px;
