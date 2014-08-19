@@ -271,7 +271,7 @@
 
         this.setValue = function(value, dataType){
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
-                $input.html(value.replace(/\$#(.*?)#\$/, '<img src="' + options.emojiDir + '/$1.png" emoji="$1">'));
+                $input.html(value.replace(/\$#(.*?)#\$/g, '<img src="' + options.emojiDir + '/$1.png" emoji="$1">'));
             else if(dataType == KEmoji.HTML_VALUE)
                 $input.html(value);
         }
