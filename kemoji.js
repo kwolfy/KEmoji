@@ -1,20 +1,110 @@
-(function($){
+(function(){
 
-    KEmoji = {
+    var count = 1;
+
+    var KEmoji = {
         HTML_VALUE: 1,
         TEXT_VALUE: 2,
         count: 1,
         data: {},
-        Create: function(options){
-            var id = this.count++;
-            this.data[id] = new Emoji(id, options);
+        init: function(element, options){
+            var id = count++;
+            this.data[id] = new Emoji(document.getElementById(element), id, options);
+            return this.data[id];
         },
-        GetById: function(id){
+        get: function(id){
             return this.data[id];
         }
     };
 
-    function Emoji(id, options)
+    var k = function(){
+        
+        function getElementClassList(el)
+        {
+            return el.className.trim().split(' ');
+        }
+        
+        function setElementClassList(el, classList)
+        {
+            el.className = classList.join(' ').trim();
+        }
+        
+        // utils
+        var utils = {
+            extend: function(object, object2){
+                var merged = object;
+                for(var key in object2)
+                    merged[key] = object2[key];
+                return merged;
+            },
+            addClass: function(el, classname){
+                if(typeof classname == 'object'){
+                    for(var i = 0; i != classname.length; i++)
+                        this.addClass(el, classname[i]);
+                    return ;
+                }
+                var classList = getElementClassList(el);
+                if(classList.indexOf(classname) == -1){
+                    classList.push(classname);
+                    setElementClassList(el, classList);
+                }
+            },
+            removeClass: function(el, classname){
+                if(typeof classname == 'object'){
+                    for(var i = 0; i != classname.length; i++)
+                        this.removeClass(el, classname[i]);
+                    return ;
+                }
+                var classList = getElementClassList(el);
+                var index = classList.indexOf(classname);
+                if(index > -1){
+                    delete classList[index];
+                    setElementClassList(el, classList);
+                }
+            },
+            hasClass: function(el, classname){
+                var classList = getElementClassList(el);
+                return classList.indexOf(classname) > -1 ?true: false;
+            },
+            attr: function(el, key, value){
+                if(typeof key == 'object')
+                    for(var k in key)
+                        this.attr(el, k, key[k]);
+                else
+                    if(key && value)
+                        el.setAttribute(key, value);
+                    else if(key)
+                        return el.getAttribute(key);
+
+                return null;
+            },
+            append: function(el, html){
+                el.innerHTML+= html;
+            },
+            parent: function(el){
+                return el.parentElement;
+            },
+            parentsByClass: function(el, classname){
+                el = el.parentElement;
+                while(el.tagName != "BODY"){
+                    var classList = getElementClassList(el);
+                    if(classList.indexOf(classname) > -1)
+                        return el;
+                    el = el.parentElement;
+                }
+
+                return false;
+            },
+            on: function(el, eventname, callback){
+                el.addEventListener(eventname, callback, false);
+            }
+        };
+
+        return utils;
+    }();
+    
+
+    function Emoji(KEmojiElement, id, options)
     {
         this.id = id;
         var defaultOptions = {
@@ -24,39 +114,55 @@
             emojiDir: 'img/emoji'
         };
 
-        options = jQuery.extend(defaultOptions, options);
+        options = k.extend(defaultOptions, options);
 
-        var $block = $(options.element);
-        $block.addClass('Emoji_Block');
-        $block.attr('emoji-id', id);
+        k.addClass(KEmojiElement, 'Emoji_Block');
+        k.attr(KEmojiElement, 'emoji-id', id);
 
-        var $input = $('<div class="Emoji_Input"><div contenteditable="true" tabindex="1"> </div></div>').appendTo($block).find('>div');
+        var inputElementContainer = document.createElement('div');
+        inputElementContainer.innerHTML = '<div contenteditable="true" tabindex="1"> </div>';
+        k.addClass(inputElementContainer, 'Emoji_Input');
 
-        var $cont = $('<div class="Emoji_Cont Emoji_Cont_Hidden" tabindex="-1" disabled="true" readonly="readonly"><div></div></div>').appendTo($block);
+        var inputElement = inputElementContainer.firstElementChild;
 
-        (function($container){
-            for(var i in options.smiles)
-                $('<div class="Emoji_Smile" emoji="' + options.smiles[i] + '"><div><img src="' + options.emojiDir + '/' + options.smiles[i] + '.png" /></div></div>').appendTo($container);
+        KEmojiElement.appendChild(inputElementContainer);
 
-            $container.append('<div class="Emoji_Clear"></div>');
-        }($cont.find('>div')));
+        var smilesContainerElement = document.createElement('div');
 
-        var $showSmilesButton = $('<div class="Emoji_Smiles_Show_Button"><div></div></div>').appendTo($block);
+        k.addClass(smilesContainerElement, ['Emoji_Cont', 'Emoji_Cont_Hidden']);
+        k.attr(smilesContainerElement, {
+            'tabindex': '-1',
+            'readonly': 'readonly'
+        });
+        smilesContainerElement.innerHTML = '<div></div>';
+
+        for(var i in options.smiles)
+            k.append(smilesContainerElement.firstElementChild, '<div class="Emoji_Smile" emoji="' + options.smiles[i] + '"><div><img src="' + options.emojiDir + '/' + options.smiles[i] + '.png" /></div></div>');
+
+        k.append(smilesContainerElement.firstElementChild, '<div class="Emoji_Clear"></div>');
+
+        KEmojiElement.appendChild(smilesContainerElement);
+
+        var showSmilesButtonElement = document.createElement('div');
+        k.addClass(showSmilesButtonElement, 'Emoji_Smiles_Show_Button');
+        showSmilesButtonElement.innerHTML = '<div></div>';
+
+        KEmojiElement.appendChild(showSmilesButtonElement);
 
         (function(elements){
-            for(var i in elements){
-                elements[i].attr({
+            for(var i = 0; i != elements.length; i++)
+                k.attr(elements[i], {
                     unselectable: 'on',
                     onselectstart: 'return false;',
                     onmousedown: 'return false;'
                 });
-            }
-        }([$cont, $showSmilesButton]));
+        }([showSmilesButtonElement, smilesContainerElement]));
+
 
         function insertSmileAtCursor(smile) {
-            var el = document.createElement("IMG");
-            el.src = options.emojiDir + '/' + smile + '.png';
-            el.setAttribute('emoji', smile);
+            var img = document.createElement("IMG");
+            k.attr(img, 'src', options.emojiDir + '/' + smile + '.png');
+            k.attr(img, 'emoji', smile);
 
             try {
                 document.execCommand("enableObjectResizing", false, false);
@@ -65,27 +171,28 @@
 
             }
 
-            if("onresizestart" in el) // IE
-                el.onresizestart = function() { return false; };
+            if("onresizestart" in img) // IE
+                img.onresizestart = function() { return false; };
 
             if (window.getSelection) {
                 var sel = window.getSelection();
 
                 if (sel.getRangeAt && sel.rangeCount) {
-                    var $currentInput = sel.focusNode.tagName ? $(sel.focusNode): $(sel.focusNode.parentNode);
-                    var $currentBlock = $currentInput.parents('.Emoji_Block');
+                    var currentInputElement = sel.focusNode.tagName ? sel.focusNode: sel.focusNode.parentNode;
+                    var currentBlockElement = k.parentsByClass(currentInputElement, 'Emoji_Block');
 
-                    if(($currentInput.is($input) | $currentInput.is($input.parent())) && $currentBlock.is($block)){
+                    if((currentInputElement == inputElement | currentInputElement == inputElementContainer)
+                        && currentBlockElement == KEmojiElement){
                         var range = window.getSelection().getRangeAt(0);
-                        range.insertNode(el);
-                        SetCursorAfterElement(el);
+                        range.insertNode(img);
+                        SetCursorAfterElement(img);
                         return true;
                     }
                 }
             }
 
             //Если браузер не поддерживает window.getSelection или не фокус направлен не на текстовое поле
-            $input.append(el);
+            inputElement.appendChild(img);
             SetCursorToEnd();
         }
 
@@ -117,12 +224,10 @@
         }
 
         function SetCursorToEnd() {
-            var el = $input[0];
-
-            el.focus();
+            inputElement.focus();
             if (window.getSelection && document.createRange) {
                 var range = document.createRange();
-                range.selectNodeContents(el);
+                range.selectNodeContents(inputElement);
                 range.collapse(false);
                 SetRange(range);
             }
@@ -130,47 +235,49 @@
 
         var smileContainerOffset = 20;
 
-        $showSmilesButton.on('click', function(){
+        k.on(showSmilesButtonElement, 'click', function(){
             toggleSmiles();
         });
 
-        $cont.on('click', '.Emoji_Smile', function(){
-            var smileId = $(this).attr('emoji');
-            insertSmileAtCursor(smileId);
+        k.on(smilesContainerElement, 'click', function(e){
+            var smileElement = k.parentsByClass(e.target, 'Emoji_Smile');
+            if(smileElement){
+                var smileId = k.attr(smileElement, 'emoji');
+                insertSmileAtCursor(smileId);
+            }
         });
 
-        $cont.on('focus', function(e){
-            e.stopPropagation();
-        });
-
-        $input.bind('paste', function(e){
+        k.on(inputElement, 'paste', function(e){
             var text = '';
-            var $this = $(this);
 
             if (e.clipboardData)
                 text = e.clipboardData.getData('text/plain');
             else if (window.clipboardData)
                 text = window.clipboardData.getData('Text');
             else if (e.originalEvent.clipboardData)
-                text = $('<div></div>').text(e.originalEvent.clipboardData.getData('text'));
+                text = document.createTextNode(e.originalEvent.clipboardData.getData('text'))
 
             if (document.queryCommandSupported('insertText')) {
-                document.execCommand('insertHTML', false, $(text).text().replace(/\n/g, '<br>'));
+                document.execCommand('insertHTML', false, text.innerText.replace(/\n/g, '<br>'));
                 return false;
             }
             else { // IE > 7
-                $this.find('*').each(function () {
-                    $(this).addClass('within');
-                });
+                var childs = inputElement.getElementsByTagName('*');
+                for(var i = 0; i != childs.length; i++){
+                    k.addClass(childs[i], 'within');
+                }
                 setTimeout(function () {
-                    $this.find('*').each(function () {
-                        $(this).not('.within').contents().unwrap();
-                    });
+                    var childs = inputElement.getElementsByTagName('*');
+                    for(var i = 0; i != childs.length; i++){
+                        if(!k.hasClass(childs[i], 'within')){
+                            childs[i].innerText = childs[i].innerHTML;
+                        }
+                    }
                 }, 1);
             }
         });
 
-        $input.on('keypress',function(e){
+        k.on(inputElement, 'keypress', function(e){
             if(e.keyCode==13){ //enter && shift
 
                 e.preventDefault(); //Prevent default browser behavior
@@ -191,55 +298,63 @@
             }
         });
 
+
+        var smilesContainerIsShowed = false;
+
         function showSmiles()
         {
-            $cont.css({
-                top: -($cont.height() + smileContainerOffset), right: 0
-            });
-            $cont.fadeIn('slow').removeClass('Emoji_Cont_Hidden');;
+            smilesContainerElement.style.display = "block";
+            var height = smilesContainerElement.offsetHeight;
+            smilesContainerElement.style.display = "none";
 
-            $(document).on('click.KEmojiDocument' + id, function(e){
-                if(!$(e.target).parents('.Emoji_Block').is($block))
-                    hideSmiles();
-            });
+            smilesContainerElement.style.top = '-' + (height + smileContainerOffset) + 'px';
+            smilesContainerElement.style.right = '0';
+            smilesContainerElement.style.display = "block";
+
+            smilesContainerIsShowed = true;
         }
+
+        k.on(document, 'click', function(e){
+            if(smilesContainerIsShowed == true){
+                var blockparent = k.parentsByClass(e.target, 'Emoji_Block');
+                if(blockparent != KEmojiElement)
+                    hideSmiles();
+            }
+        });
 
         function hideSmiles()
         {
-            $(document).unbind('click.KEmojiDocument' + id);
-            $cont.fadeOut('slow').addClass('Emoji_Cont_Hidden');
+            smilesContainerElement.style.display = 'none';
+            smilesContainerIsShowed = false;
         }
 
         function toggleSmiles()
         {
-            if($cont.hasClass('Emoji_Cont_Hidden'))
+            if(smilesContainerIsShowed == false)
                 showSmiles();
             else
                 hideSmiles();
         }
 
 
-
-
-
-        this.focus = function(cursorToEnd){
-            $input.focus();
+        this.focus = function(){
+            KEmojiElement.focus();
         };
 
         this.setWidth = function(width){
-            $block.width(width);
+            KEmojiElement.style.width = width;
         };
 
         this.setHeight = function(height){
-            $block.height(height);
+            KEmojiElement.style.height = height;
         };
 
         this.setSmileContainerWidth = function(width){
-            $cont.find('>div').css('width', width);
+            smilesContainerElement.firstElementChild.style.width = width;
         };
 
         this.setSmileContainerHeight = function(height){
-            $cont.height(height);
+            smilesContainerElement.style.height(height);
         };
 
         this.setSmileContainerOffset = function(offset){
@@ -259,7 +374,7 @@
         };
 
         this.getValue = function(dataType){
-            var val = $input.html();
+            var val = inputElement.innerHTML
 
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
                 return val.replace(/<img.*?emoji="(.*?)".*?>/g, " $#$1#$ ");
@@ -271,12 +386,10 @@
 
         this.setValue = function(value, dataType){
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
-                $input.html(value.replace(/\$#(.*?)#\$/g, '<img src="' + options.emojiDir + '/$1.png" emoji="$1">'));
+                inputElement.innerHTML = value.replace(/\$#(.*?)#\$/g, '<img src="' + options.emojiDir + '/$1.png" emoji="$1">');
             else if(dataType == KEmoji.HTML_VALUE)
-                $input.html(value);
+                inputElement.innerHTML = value;
         }
-
-
 
         if(options.width) this.setWidth(options.width);
         if(options.height) this.setHeight(options.height);
@@ -286,33 +399,6 @@
 
     }
 
+    window.KEmoji = KEmoji;
 
-    jQuery.fn.KEmoji = function(options, arg){
-        options = options?options:{};
-        if(typeof options == 'object'){
-            $.each($(this), function(i){
-                options.element = this;
-                if(!$(this).attr('emoji-id'))
-                    KEmoji.Create(options);
-            });
-        }
-        else if(typeof options == 'string'){
-            var emoji = KEmoji.GetById($(this).attr('emoji-id'));
-
-            if(options == 'api')
-                return emoji;
-            else if(options == 'val')
-                if(arg)
-                    return emoji.setValue(arg);
-                else
-                    return emoji.getValue();
-            else if(options == 'valAsHtml')
-                if(arg)
-                    return emoji.setValue(arg, KEmoji.HTML_VALUE);
-                else
-                    return emoji.getValue(KEmoji.HTML_VALUE);
-
-        }
-    };
-
-}(jQuery));
+}());

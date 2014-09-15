@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/emoji.css" />
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-
     <script src="../kemoji.js" type="text/javascript"></script>
 
 </head>
@@ -16,55 +14,41 @@
         <div id="myEmoji" style="width:400px;height:200px;"></div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('#myEmoji').KEmoji({
-                emojiDir: '../img/emoji',
-                width: 300,
-                height: 200,
-                smileContainerWidth: 280,
-                smileContainerHeight: 150
-            });
-
-            /*
-             $('#myEmoji').KEmoji('val'); //Получаем значение
-             $('#myEmoji').KEmoji('val', 'Hello'); //задаем значение
-
-             $('#myEmoji').KEmoji('valAsHtml'); // Получаем html значение
-             $('#myEmoji').KEmoji('valAsHtml', 'Hello <img src="">'); // Задаем
-
-             */
-
-            /*
-                var emoji = $('#myEmoji').KEmoji('api');
-
-                emoji.getValue(); // значение как текст
-                emoji.getValue(KEmoji.HTML_VALUE); // как html
-
-                emoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
-                emoji.setValue('Hello <img src="smile.png">', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
-
-                emoji.setWidth(300); //ширина блока
-                emoji.setHeight(58); //высота
-
-                emoji.setSmileContainerWidth(100); // ширина блока со смайлами
-                emoji.setSmileContainerHeight(100) // высота
-                emoji.setSmileContainerOffset(20); // отступ блока со смайлами от поля ввода
-
-                // показываем и скрываем блок со смайлами
-                emoji.showSmiles();
-                emoji.hideSmiles();
-                emoji.toggleSmiles();
-
-                emoji.focus(); // переводим фокус на элемент
-
-
-
-
-            */
-
-
-
+        KEmoji.init('myEmoji', {
+            emojiDir: '../img/emoji',
+            width: 300,
+            height: 200,
+            smileContainerWidth: 280,
+            smileContainerHeight: 150
         });
+
+        /*
+         var emoji = KEmoji.get('myEmoji');
+
+         emoji.getValue(); // значение как текст
+         emoji.getValue(KEmoji.HTML_VALUE); // как html
+
+         emoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
+         emoji.setValue('Hello <img src="smile.png">', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
+
+         emoji.setWidth(300); //ширина блока
+         emoji.setHeight(58); //высота
+
+         emoji.setSmileContainerWidth(100); // ширина блока со смайлами
+         emoji.setSmileContainerHeight(100) // высота
+         emoji.setSmileContainerOffset(20); // отступ блока со смайлами от поля ввода
+
+         // показываем и скрываем блок со смайлами
+         emoji.showSmiles();
+         emoji.hideSmiles();
+         emoji.toggleSmiles();
+
+         emoji.focus(); // переводим фокус на элемент
+
+
+
+
+         */
     </script>
 
 </body>

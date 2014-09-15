@@ -1,27 +1,19 @@
-Плагин, превращающий div в текстовое поле с возможностью вставки смайлов
+Превращаем div в текстовое поле с возможностью вставки смайлов
 <br>
 <a href="http://kwolfy.github.io/KEmoji/">Демо</a>
 ```javascript
   //Пример инициализации с параметрами:
-  $('div#myEmoji').KEmoji({
+  KEmoji.init('myEmoji', {
       emojiDir: '../img/emoji',
       width: 300,
-      height: 58,
+      height: 200,
       smileContainerWidth: 280,
       smileContainerHeight: 150
   });
 ```
-<h4>Работаем со значением</h4>
-```javascript
-  $('#myEmoji').KEmoji('val'); //Получаем значение
-  $('#myEmoji').KEmoji('val', 'Hello $#D83DDE10#$'); //задаем значение
-
-  $('#myEmoji').KEmoji('valAsHtml'); // Получаем html значение
-  $('#myEmoji').KEmoji('valAsHtml', 'Hello <img src="">'); //Задаем
-```
 <h4>Api</h4>
 ```javascript
-var emoji = $('#myEmoji').KEmoji('api');
+var emoji = KEmoji.get('myEmoji');
 ```
 
 ```javascript
