@@ -86,13 +86,14 @@
             },
             parentsByClass: function(el, classname){
                 el = el.parentElement;
-                while(el.tagName != "BODY"){
-                    var classList = getElementClassList(el);
-                    if(classList.indexOf(classname) > -1)
-                        return el;
-                    el = el.parentElement;
+                if(el){
+                    while(el.tagName != "BODY"){
+                        var classList = getElementClassList(el);
+                        if(classList.indexOf(classname) > -1)
+                            return el;
+                        el = el.parentElement;
+                    }
                 }
-
                 return false;
             },
             on: function(el, eventname, callback){
@@ -116,12 +117,12 @@
 
         options = k.extend(defaultOptions, options);
 
-        k.addClass(KEmojiElement, 'Emoji_Block');
+        k.addClass(KEmojiElement, 'KEmoji_Block');
         k.attr(KEmojiElement, 'emoji-id', id);
 
         var inputElementContainer = document.createElement('div');
         inputElementContainer.innerHTML = '<div contenteditable="true" tabindex="1"> </div>';
-        k.addClass(inputElementContainer, 'Emoji_Input');
+        k.addClass(inputElementContainer, 'KEmoji_Input');
 
         var inputElement = inputElementContainer.firstElementChild;
 
@@ -129,7 +130,7 @@
 
         var smilesContainerElement = document.createElement('div');
 
-        k.addClass(smilesContainerElement, ['Emoji_Cont', 'Emoji_Cont_Hidden']);
+        k.addClass(smilesContainerElement, ['KEmoji_Cont', 'KEmoji_Cont_Hidden']);
         k.attr(smilesContainerElement, {
             'tabindex': '-1',
             'readonly': 'readonly'
@@ -137,17 +138,22 @@
         smilesContainerElement.innerHTML = '<div></div>';
 
         for(var i in options.smiles)
-            k.append(smilesContainerElement.firstElementChild, '<div class="Emoji_Smile" emoji="' + options.smiles[i] + '"><div><img src="' + options.emojiDir + '/' + options.smiles[i] + '.png" /></div></div>');
+            k.append(smilesContainerElement.firstElementChild, '<div class="KEmoji_Smile" emoji="' + options.smiles[i] + '"><div><img src="' + options.emojiDir + '/' + options.smiles[i] + '.png" /></div></div>');
 
-        k.append(smilesContainerElement.firstElementChild, '<div class="Emoji_Clear"></div>');
+        k.append(smilesContainerElement.firstElementChild, '<div class="KEmoji_Clear"></div>');
 
         KEmojiElement.appendChild(smilesContainerElement);
 
+        var bottomTollbarElement = document.createElement('div');
+        k.addClass(bottomTollbarElement, 'KEmoji_TollBar');
+
         var showSmilesButtonElement = document.createElement('div');
-        k.addClass(showSmilesButtonElement, 'Emoji_Smiles_Show_Button');
+        k.addClass(showSmilesButtonElement, 'KEmoji_Smiles_Show_Button');
         showSmilesButtonElement.innerHTML = '<div></div>';
 
-        KEmojiElement.appendChild(showSmilesButtonElement);
+        bottomTollbarElement.appendChild(showSmilesButtonElement);
+
+        KEmojiElement.appendChild(bottomTollbarElement);
 
         (function(elements){
             for(var i = 0; i != elements.length; i++)
@@ -179,7 +185,7 @@
 
                 if (sel.getRangeAt && sel.rangeCount) {
                     var currentInputElement = sel.focusNode.tagName ? sel.focusNode: sel.focusNode.parentNode;
-                    var currentBlockElement = k.parentsByClass(currentInputElement, 'Emoji_Block');
+                    var currentBlockElement = k.parentsByClass(currentInputElement, 'KEmoji_Block');
 
                     if((currentInputElement == inputElement | currentInputElement == inputElementContainer)
                         && currentBlockElement == KEmojiElement){
@@ -233,14 +239,12 @@
             }
         }
 
-        var smileContainerOffset = 20;
-
         k.on(showSmilesButtonElement, 'click', function(){
             toggleSmiles();
         });
 
         k.on(smilesContainerElement, 'click', function(e){
-            var smileElement = k.parentsByClass(e.target, 'Emoji_Smile');
+            var smileElement = k.parentsByClass(e.target, 'KEmoji_Smile');
             if(smileElement){
                 var smileId = k.attr(smileElement, 'emoji');
                 insertSmileAtCursor(smileId);
@@ -299,7 +303,8 @@
         });
 
 
-        var smilesContainerIsShowed = false;
+        var smilesContainerIsShowed = false,
+            smileContainerOffset = 48;
 
         function showSmiles()
         {
@@ -307,8 +312,8 @@
             var height = smilesContainerElement.offsetHeight;
             smilesContainerElement.style.display = "none";
 
-            smilesContainerElement.style.top = '-' + (height + smileContainerOffset) + 'px';
-            smilesContainerElement.style.right = '0';
+            smilesContainerElement.style.bottom = '-' + (height + smileContainerOffset) + 'px';
+            smilesContainerElement.style.right = '-20px';
             smilesContainerElement.style.display = "block";
 
             smilesContainerIsShowed = true;
@@ -316,7 +321,7 @@
 
         k.on(document, 'click', function(e){
             if(smilesContainerIsShowed == true){
-                var blockparent = k.parentsByClass(e.target, 'Emoji_Block');
+                var blockparent = k.parentsByClass(e.target, 'KEmoji_Block');
                 if(blockparent != KEmojiElement)
                     hideSmiles();
             }
@@ -342,23 +347,19 @@
         };
 
         this.setWidth = function(width){
-            KEmojiElement.style.width = width;
+            KEmojiElement.style.width = width + 'px';
         };
 
         this.setHeight = function(height){
-            KEmojiElement.style.height = height;
+            KEmojiElement.style.height = height + 'px';
         };
 
         this.setSmileContainerWidth = function(width){
-            smilesContainerElement.firstElementChild.style.width = width;
+            smilesContainerElement.firstElementChild.style.width = width + 'px';
         };
 
         this.setSmileContainerHeight = function(height){
-            smilesContainerElement.style.height(height);
-        };
-
-        this.setSmileContainerOffset = function(offset){
-            smileContainerOffset = offset;
+            smilesContainerElement.style.height = height + 'px';
         };
 
         this.showSmiles = function(){

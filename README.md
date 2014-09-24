@@ -1,4 +1,4 @@
-Превращаем div в текстовое поле с возможностью вставки смайлов
+Текстовое поле с возможностью вставки смайлов
 <br>
 <a href="http://kwolfy.github.io/KEmoji/">Демо</a>
 ```javascript
@@ -6,35 +6,30 @@
   KEmoji.init('myEmoji', {
       emojiDir: '../img/emoji',
       width: 300,
-      height: 200,
-      smileContainerWidth: 280,
-      smileContainerHeight: 150
+      height: 200
   });
 ```
 <h4>Api</h4>
 ```javascript
 var emoji = KEmoji.get('myEmoji');
 ```
-
+<h4>Визуальные параметры</h4>
 ```javascript
-emoji.setWidth(300); //ширина блока
+emoji.setWidth(300); //ширина тектового поля
 emoji.setHeight(58); //высота
-```
-```javascript
-emoji.setSmileContainerWidth(100); // ширина блока со смайлами
+
+emoji.setSmileContainerWidth(100); // ширина всплывающего окна со смайлами
 emoji.setSmileContainerHeight(100) // высота
-emoji.setSmileContainerOffset(20); // отступ блока со смайлами от поля ввода
+
+emoji.focus(); // переводим фокус на текстовое поле
 ```
 
+<h4>Управление всплывающим окном со смайлами</h4>
 ```javascript
 // показываем и скрываем блок со смайлами
 emoji.showSmiles();
 emoji.hideSmiles();
 emoji.toggleSmiles();
-```
-
-```javascript
-emoji.focus(); // переводим фокус на элемент
 ```
 
 ```javascript

@@ -1,16 +1,16 @@
-.Emoji_Block {
+.KEmoji_Block {
     display: inline-block;
     position: relative;
     margin: 0 auto;
     text-align: left;
 }
-.Emoji_Block .Emoji_Input {
+.KEmoji_Block .KEmoji_Input {
     display: block;
     position: relative;
     width: 100%;
     height: 100%;
 }
-.Emoji_Block .Emoji_Input > div[contenteditable=true] {
+.KEmoji_Block .KEmoji_Input > div[contenteditable=true] {
     display: block;
     position:relative;
     z-index:10;
@@ -18,75 +18,95 @@
     height: 100%;
     padding: 10px;
     padding-right: 20px;
-    border: 1px solid #ccc;
     background:#fff;
     font-size: 14px;
     outline: none;
-    border-radius: 2px;
+    border-radius: 4px 4px 0 0 ;
     line-height: 16px;
     overflow-x: hidden;
     overflow-y: auto;
 }
-.Emoji_Block .Emoji_Input > div[contenteditable=true] img {
+.KEmoji_Block .KEmoji_Input > div[contenteditable=true] img {
     display: inline-block;
     vertical-align: middle;
     height: 16px;
     margin: 0 4px;
 }
-.Emoji_Block .Emoji_Clear {
+.KEmoji_Block .KEmoji_Clear {
     clear: both;
 }
-.Emoji_Block .Emoji_Cont {
+.KEmoji_Block .KEmoji_Cont {
     display: none;
     position: absolute;
     height: 200px;
-    overflow-x: hidden;
-    overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.Emoji_Block .Emoji_Cont > div {
+
+.KEmoji_Block .KEmoji_Cont::after{
+    content: '';
+    position:absolute;
+    top:-10px;
+    right:25px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 10px solid white;
+}
+.KEmoji_Block .KEmoji_Cont > div {
     background: #fff;
     width: 280px;
+    height:200px;
     padding: 5px;
     box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
-.Emoji_Block .Emoji_Cont .Emoji_Smile {
+.KEmoji_Block .KEmoji_Cont .KEmoji_Smile {
     float: left;
     padding: 1px;
     cursor: pointer;
 }
-.Emoji_Block .Emoji_Cont .Emoji_Smile > div {
+.KEmoji_Block .KEmoji_Cont .KEmoji_Smile > div {
     width: 26px;
     height: 26px;
     line-height: 26px;
     text-align: center;
 }
-.Emoji_Block .Emoji_Cont .Emoji_Smile > div img {
+.KEmoji_Block .KEmoji_Cont .KEmoji_Smile > div img {
     margin-top: 5px;
 }
-.Emoji_Block .Emoji_Cont .Emoji_Smile > div:hover {
+.KEmoji_Block .KEmoji_Cont .KEmoji_Smile > div:hover {
     background: #ccc;
     border-radius: 2px;
 }
-.Emoji_Block .Emoji_Smiles_Show_Button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    z-index:11;
+
+.KEmoji_Block .KEmoji_TollBar{
+    width:100%;
+    height:30px;
+    background:#eee;
+    position:relative;
+    border-radius:0 0 4px 4px;
 }
-.Emoji_Block .Emoji_Smiles_Show_Button > div {
-    width: 16px;
-    height: 16px;
-    background: url(../img/emoji/D83DDE0A.png);
+.KEmoji_Block .KEmoji_TollBar .KEmoji_Smiles_Show_Button {
+    float:right;
+    margin-top:5px;
+    margin-right:5px;
+}
+.KEmoji_Block .KEmoji_TollBar .KEmoji_Smiles_Show_Button > div {
+    width: 20px;
+    height: 20px;
+    background: url(../img/1.png);
+    background-size:cover;
     cursor: pointer;
 }
-.Emoji_Submit {
+.KEmoji_Submit {
     position: absolute;
     right: 0px;
     bottom: -30px;
 }
-.Emoji_Submit > div {
+.KEmoji_Submit > div {
     display: inline-block;
     padding: 0 20px;
     height: 30px;
@@ -97,6 +117,6 @@
     font-size: 12px;
     cursor: pointer;
 }
-.Emoji_Submit > div:hover {
+.KEmoji_Submit > div:hover {
     border: 1px solid #aaf;
 }

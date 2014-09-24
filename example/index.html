@@ -3,53 +3,92 @@
 <head>
     <title>Emoji</title>
 
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500&subset=cyrillic,latin' rel='stylesheet' type='text/css'>-->
+
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/emoji.css" />
+
+    <link href="../lib/prettify.css" rel="stylesheet">
 
     <script src="../kemoji.js" type="text/javascript"></script>
 
 </head>
-<body>
-    <div class="container">
-        <div id="myEmoji" style="width:400px;height:200px;"></div>
-    </div>
-    <script type="text/javascript">
-        KEmoji.init('myEmoji', {
-            emojiDir: '../img/emoji',
-            width: 300,
-            height: 200,
-            smileContainerWidth: 280,
-            smileContainerHeight: 150
-        });
+<body onload="prettyPrint();">
+    <header id="Header">
 
-        /*
-         var emoji = KEmoji.get('myEmoji');
+        <section id="Header_Content">
+            <div class="container">
+                <div id="Header_Content_KEmoji">
 
-         emoji.getValue(); // значение как текст
-         emoji.getValue(KEmoji.HTML_VALUE); // как html
+                    <div id="myEmoji"></div>
 
-         emoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
-         emoji.setValue('Hello <img src="smile.png">', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
+                    <script type="text/javascript">
+                        var kemoji = KEmoji.init('myEmoji', {
+                            emojiDir: '../img/emoji',
+                            width: 400,
+                            height: 200,
+                            smileContainerWidth: 280,
+                            smileContainerHeight: 150
+                        });
 
-         emoji.setWidth(300); //ширина блока
-         emoji.setHeight(58); //высота
+                        kemoji.setValue('Hello $#D83DDE0A#$');
+                    </script>
+                </div>
+                <div id="Header_Content_Description">
+                    <h2>KEmoji.js</h2>
+                    <p>Текстовое поле с возможностью вставки смайлов</p>
+                    <div class="TwoButtons">
+                        <a href="https://github.com/kwolfy/KEmoji/archive/master.zip" class="btn">Скачать</a>
+                        <a href="https://github.com/kwolfy/KEmoji" class="btn">GitHub</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </section>
 
-         emoji.setSmileContainerWidth(100); // ширина блока со смайлами
-         emoji.setSmileContainerHeight(100) // высота
-         emoji.setSmileContainerOffset(20); // отступ блока со смайлами от поля ввода
+    </header>
+    <section id="Body">
+        <div class="container">
+            <h4>Инициляция</h4>
+<pre class="prettyprint html-lang">
+&lt;div id="myEmojiField"&gt;&lt;/div&gt;
 
-         // показываем и скрываем блок со смайлами
-         emoji.showSmiles();
-         emoji.hideSmiles();
-         emoji.toggleSmiles();
+&lt;script&gt;
+    var kemoji = KEmoji.init('myEmojiField', {
+        emojiDir: '../img/emoji',
+        width: 400,
+        height: 200,
+    });
+&lt;/script&gt
+</pre>
+            <h4>Работаем с данными</h4>
+<pre class="prettyprint html-lang">
+kemoji.getValue(); // получаем значение как текст
+kemoji.getValue(KEmoji.HTML_VALUE); // как html
 
-         emoji.focus(); // переводим фокус на элемент
+kemoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
+kemoji.setValue('&lt;img src="smile.png"&gt;', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
+</pre>
+            <h4>Визуальные параметры</h4>
+<pre class="prettyprint html-lang">
+kemoji.setWidth(300); //ширина тектового поля
+kemoji.setHeight(58); //высота
 
+kemoji.setSmileContainerWidth(100); // ширина всплывающего окна со смайлами
+kemoji.setSmileContainerHeight(100) // высота
 
+kemoji.focus(); // переводим фокус на текстовое поле
+</pre>
+            <h4>Управление всплывающим окном со смайлами</h4>
+<pre class="prettyprint html-lang">
+kemoji.showSmiles();
+kemoji.hideSmiles();
+kemoji.toggleSmiles();
+</pre>
+        </div>
+    </section>
 
-
-         */
-    </script>
+    <script src="../lib/prettify.js"></script>
 
 </body>
 </html>
