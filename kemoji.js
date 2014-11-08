@@ -138,7 +138,7 @@
         smilesContainerElement.innerHTML = '<div></div>';
 
         for(var i in options.smiles)
-            k.append(smilesContainerElement.firstElementChild, '<div class="KEmoji_Smile" emoji="' + options.smiles[i] + '"><div><img src="' + options.emojiDir + '/' + options.smiles[i] + '.png" /></div></div>');
+            k.append(smilesContainerElement.firstElementChild, '<div class="KEmoji_Smile" emoji="' + options.smiles[i] + '"><div><i class="ke ke-' + options.smiles[i] + '"></i></div></div>');
 
         k.append(smilesContainerElement.firstElementChild, '<div class="KEmoji_Clear"></div>');
 
@@ -167,18 +167,10 @@
 
         function insertSmileAtCursor(smile) {
             var img = document.createElement("IMG");
-            k.attr(img, 'src', options.emojiDir + '/' + smile + '.png');
+            k.attr(img, 'src', '/img/blank.png');
+            k.addClass(img, 'ke');
+            k.addClass(img, 'ke-' + smile);
             k.attr(img, 'emoji', smile);
-
-            try {
-                document.execCommand("enableObjectResizing", false, false);
-            }
-            catch(e) {
-
-            }
-
-            if("onresizestart" in img) // IE
-                img.onresizestart = function() { return false; };
 
             if (window.getSelection) {
                 var sel = window.getSelection();
@@ -378,7 +370,7 @@
             var val = inputElement.innerHTML
 
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
-                return val.replace(/<img.*?emoji="(.*?)".*?>/g, " $#$1#$ ");
+                return val.replace(/<img.*?class="ke ke-(.*?)".*?>/g, " $#$1#$ ");
             else if(dataType == KEmoji.HTML_VALUE)
                 return val;
 
@@ -387,7 +379,7 @@
 
         this.setValue = function(value, dataType){
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
-                inputElement.innerHTML = value.replace(/\$#(.*?)#\$/g, '<img src="' + options.emojiDir + '/$1.png" emoji="$1">');
+                inputElement.innerHTML = value.replace(/\$#(.*?)#\$/g, '<img src="/blank.png" class="ke ke-$1">');
             else if(dataType == KEmoji.HTML_VALUE)
                 inputElement.innerHTML = value;
         }
