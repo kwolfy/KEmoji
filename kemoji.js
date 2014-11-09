@@ -199,7 +199,7 @@
 
         function insertSmileAtCursor(smile) {
             var img = document.createElement("IMG");
-            k.attr(img, 'src', '/img/blank.png');
+            k.attr(img, 'src', '/img/opacity.png');
             k.addClass(img, 'ke');
             k.addClass(img, 'ke-' + smile);
             k.attr(img, 'emoji', smile);
@@ -420,7 +420,7 @@
 
         this.setValue = function(value, dataType){
             if(!dataType || dataType == KEmoji.TEXT_VALUE)
-                inputElement.innerHTML = value.replace(/\$#(.*?)#\$/g, '<img src="/img/blank.png" onresizestart="return false" class="ke ke-$1">');
+                inputElement.innerHTML = value.replace(/\$#(.*?)#\$/g, '<img src="/img/opacity.png" onresizestart="return false" class="ke ke-$1">');
             else if(dataType == KEmoji.HTML_VALUE)
                 inputElement.innerHTML = value;
         }
