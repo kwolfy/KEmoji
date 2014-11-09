@@ -1,111 +1,84 @@
-.pln {
-    color: #000
-}
+/* ========================
+//#google-prettify-monokai-theme
+//#Version: 0.2
+//#Author: RaphaelDDL
+//#Github: https://github.com/RaphaelDDL/google-prettify-monokai-theme/
+//#MIT LICENSE
+//#https://github.com/RaphaelDDL/compass-generic-config/blob/master/LICENSE
+//For use with Google Code Prettify, HTML Syntax only
+//======================== */
 
-@media screen {
-    .str {
-        color: #080
-    }
+pre .str, code .str { color: #e6db5a; } /* string */
+pre .kwd, code .kwd { color: #66d9ef; } /* keyword */
+pre .com, code .com { color: #75715e; font-style: italic; } /* comment */
+pre .typ, code .typ { color: #66d9ef; } /* type */
+pre .lit, code .lit { color: #ae81ff; } /* literal */
+pre .pun, code .pun { color: #fff; } /* punctuation */
+pre .pln, code .pln { color: #fff; } /* plaintext */
+pre .tag, code .tag { color: #f92672; } /* html/xml tag */
+pre .atn, code .atn { color: #a6e22a; } /* html/xml attribute name */
+pre .atv, code .atv { color: #e6db74; } /* html/xml attribute value */
+pre .dec, code .dec { color: #ae81ff; } /* decimal */
 
-    .kwd {
-        color: #008
-    }
-
-    .com {
-        color: #800
-    }
-
-    .typ {
-        color: #606
-    }
-
-    .lit {
-        color: #066
-    }
-
-    .pun, .opn, .clo {
-        color: #660
-    }
-
-    .tag {
-        color: #008
-    }
-
-    .atn {
-        color: #606
-    }
-
-    .atv {
-        color: #080
-    }
-
-    .dec, .var {
-        color: #606
-    }
-
-    .fun {
-        color: red
-    }
-}
-
-@media print, projection {
-    .str {
-        color: #060
-    }
-
-    .kwd {
-        color: #006;
-        font-weight: bold
-    }
-
-    .com {
-        color: #600;
-        font-style: italic
-    }
-
-    .typ {
-        color: #404;
-        font-weight: bold
-    }
-
-    .lit {
-        color: #044
-    }
-
-    .pun, .opn, .clo {
-        color: #440
-    }
-
-    .tag {
-        color: #006;
-        font-weight: bold
-    }
-
-    .atn {
-        color: #404
-    }
-
-    .atv {
-        color: #060
-    }
+pre.prettyprint, code.prettyprint {
+    background-color: #272822;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    border-radius: 2px;
 }
 
 pre.prettyprint {
-    padding: 10px;
-    background:#eee;
-    font-size:1.2em;
+    width: 100%;
+    margin: 1em auto;
+    padding: 1em;
+    white-space: pre-wrap;
     font-weight:300;
+    line-height:1.3em;
 }
 
+pre.prettyprinted {
+    /*box-shadow:inset 0 0 1px 2px #3c3d39, 0 0 15px rgba(0,0,0,0.5);
+    border:1px solid #0b0c0a;*/
+}
+
+
+/* ------------------------
+//Section: class 'linenums' for line numbering
+//------------------------ */
 ol.linenums {
     margin-top: 0;
-    margin-bottom: 0
-}
+    margin-bottom: 0;
+    color: #75715e;
+    list-style: decimal inside !important;
+} /* IE indents via margin-left */
 
-li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
-    list-style-type: none
-}
 
-li.L1, li.L3, li.L5, li.L7, li.L9 {
-    background: #eee
+/* =============================================
+//Section: Print Styles (partially from Sunburn Theme)
+//================================================ */
+@media print {
+    pre.prettyprinted, pre.prettyprint, code.prettyprint {
+        background-color:#fff;
+        color:#000;
+        -moz-border-radius:0;
+        -webkit-border-radius:0;
+        -o-border-radius:0;
+        -ms-border-radius:0;
+        -khtml-border-radius:0;
+        border-radius:0;
+    }
+
+    pre .str, code .str { color: #060; }
+    pre .kwd, code .kwd { color: #006; font-weight: bold; }
+    pre .com, code .com { color: #600; font-style: italic; }
+    pre .typ, code .typ { color: #404; font-weight: bold; }
+    pre .lit, code .lit { color: #044; }
+    pre .pun, code .pun { color: #440; }
+    pre .pln, code .pln { color: #000; }
+    pre .tag, code .tag { color: #006; font-weight: bold; }
+    pre .atn, code .atn { color: #404; }
+    pre .atv, code .atv { color: #060; }
 }
