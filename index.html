@@ -1,95 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Emoji</title>
+Текстовое поле с возможностью вставки смайлов
+<br>
+<a href="http://kwolfy.github.io/KEmoji/">Демо</a>
+```javascript
+//Пример инициализации с параметрами:
+KEmoji.init('myEmoji', {
+width: 300,
+height: 200
+});
 
-    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500&subset=cyrillic,latin' rel='stylesheet' type='text/css'>-->
+var emojiList = KEmoji.initByClass('className', {width: 400, height: 200});
+var kemoji = emojiList[0];
 
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/emoji.css" />
-    <link rel="stylesheet" href="./css/smiles.css" />
 
-    <link href="./lib/prettify.css" rel="stylesheet">
+```
+<h4>Api</h4>
+```javascript
+var emoji = KEmoji.get('myEmoji');
+```
+<h4>Визуальные параметры</h4>
+```javascript
+emoji.setWidth(300); //ширина тектового поля
+emoji.setHeight(58); //высота
 
-    <script src="./kemoji.js" type="text/javascript"></script>
+emoji.setSmileContainerWidth(100); // ширина всплывающего окна со смайлами
+emoji.setSmileContainerHeight(100) // высота
 
-</head>
-<body onload="prettyPrint();">
-    <header id="Header">
+emoji.focus(); // переводим фокус на текстовое поле
+```
 
-        <section id="Header_Content">
-            <div class="container">
-                <div id="Header_Content_KEmoji">
+<h4>Управление всплывающим окном со смайлами</h4>
+```javascript
+// показываем и скрываем блок со смайлами
+emoji.showSmiles();
+emoji.hideSmiles();
+emoji.toggleSmiles();
+```
 
-                    <div id="myEmoji"></div>
+```javascript
+emoji.getValue(); // значение как текст
+emoji.getValue(KEmoji.HTML_VALUE); // как html
 
-                    <script type="text/javascript">
-                        var kemoji = KEmoji.init('myEmoji', {
-                            emojiDir: './img/emoji',
-                            width: 400,
-                            height: 200,
-                            smileContainerWidth: 280,
-                            smileContainerHeight: 150
-                        });
+emoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
+emoji.setValue('Hello <img src="smile.png">', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
+```
 
-                        kemoji.setValue('Hello $#D83DDE0A#$');
-                    </script>
-                </div>
-                <div id="Header_Content_Description">
-                    <h2>KEmoji.js</h2>
-                    <p>Текстовое поле с возможностью вставки смайлов</p>
-                    <div class="TwoButtons">
-                        <a href="https://github.com/kwolfy/KEmoji/archive/gh-pages.zip" class="btn">Скачать</a>
-                        <a href="https://github.com/kwolfy/KEmoji" class="btn">GitHub</a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </section>
 
-    </header>
-    <section id="Body">
-        <div class="container">
-            <h4>Инициляция</h4>
-<pre class="prettyprint html-lang">
-&lt;div id="myEmojiField"&gt;&lt;/div&gt;
+<h4>Генерирование смайлов</h4>
+<p>В файле <i>generator/index.php</i> прописываем нужные параметры и запускаем</p>
 
-&lt;script&gt;
-    var kemoji = KEmoji.init('myEmojiField', {
-        emojiDir: '../img/emoji',
-        width: 400,
-        height: 200,
-    });
-&lt;/script&gt
-</pre>
-            <h4>Работаем с данными</h4>
-<pre class="prettyprint html-lang">
-kemoji.getValue(); // получаем значение как текст
-kemoji.getValue(KEmoji.HTML_VALUE); // как html
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width:20%;">Параметр</th>
+        <th style="width:50%">Описание</th>
+        <th style="width:30%;">По умолчанию</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>ROOT_DIR</td>
+        <td>Корневая директория, относительно которой работают пути</td>
+        <td>текущая папка</td>
+    </tr>
+    <tr>
+        <td>INPUT_DIR</td>
+        <td>Директория со смайлами, названия которых должны строиться по шаблону <i>кодсмайла.(png|gif|jpg)</i></td>
+        <td>generator/demo/emoji</td>
+    </tr>
+    <tr>
+        <td>OUTPUT_DIR</td>
+        <td>Директория для сохранения сгенерированного результата</td>
+        <td>generator/demo/result</td>
+    </tr>
+    <tr>
+        <td>SMILE_WIDTH</td>
+        <td>Ширина смайла</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>SMILE_HEIGHT</td>
+        <td>Высота смайла</td>
+        <td>16</td>
+    </tr>
+    <tr>
+        <td>MAX_COLS</td>
+        <td>Максимальное количество смайлов в одной строке картинки.</td>
+        <td>20</td>
+    </tr>
+    </tbody>
+</table>
 
-kemoji.setValue('Hello $#D83DDE10#$') // задаем значение ввиде текста
-kemoji.setValue('&lt;img src="smile.png"&gt;', KEmoji.HTML_VALUE); // задаем html (не рекомендуется)
-</pre>
-            <h4>Визуальные параметры</h4>
-<pre class="prettyprint html-lang">
-kemoji.setWidth(300); //ширина тектового поля
-kemoji.setHeight(58); //высота
-
-kemoji.setSmileContainerWidth(100); // ширина всплывающего окна со смайлами
-kemoji.setSmileContainerHeight(100) // высота
-
-kemoji.focus(); // переводим фокус на текстовое поле
-</pre>
-            <h4>Управление всплывающим окном со смайлами</h4>
-<pre class="prettyprint html-lang">
-kemoji.showSmiles();
-kemoji.hideSmiles();
-kemoji.toggleSmiles();
-</pre>
-        </div>
-    </section>
-
-    <script src="./lib/prettify.js"></script>
-
-</body>
-</html>
