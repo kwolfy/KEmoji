@@ -318,10 +318,12 @@
                         range = GetRange(),
                         br = document.createElement("br"),
                         textNode = document.createTextNode("\u00a0"); //Passing " " directly will not end up being shown correctly
-                    range.deleteContents();//required or not?
+
+                    br.setAttribute("dd", "1");
+                    range.deleteContents();
                     range.insertNode(br);
                     range.collapse(false);
-                    range.insertNode(document.createElement("br"));
+                    range.setStartAfter(br);
 
                     SetRange(range);
                     return false;
