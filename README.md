@@ -1,3 +1,5 @@
+##UNMAINTAINED
+
 Текстовое поле с возможностью вставки смайлов
 <br>
 <a href="http://kwolfy.github.io/KEmoji/">Демо</a>
